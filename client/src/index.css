@@ -1,0 +1,170 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import "preline/dist/preline.css";
+
+.button {
+  padding: 6px 16px;
+  @apply rounded-lg cursor-pointer text-center font-semibold inline-flex items-center justify-center relative  gap-x-2  disabled:opacity-50 disabled:pointer-events-none duration-200 active:translate-y-px overflow-hidden
+   after:w-full after:h-full after:bg-white after:absolute after:opacity-0 hover:after:opacity-10  after:duration-200;
+}
+.button-outline {
+  @apply bg-transparent dark:border-white/10 border-black/60  border  hover:text-ter hover:border-ter !border-opacity-50 after:opacity-0 hover:after:opacity-0;
+}
+
+.loader {
+  @apply animate-spin border-[6px] dark:border-white/20 border-black/20  dark:border-t-white/60 border-t-sec   rounded-full;
+}
+
+.border-color {
+  @apply border-gray-400 dark:border-opacity-50 border-opacity-65 dark:border-neutral-600;
+}
+
+.bg-color {
+  @apply bg-pri dark:bg-qua dark:shadow-none;
+}
+
+.tooltip {
+  @apply dark:bg-qua bg-sec text-[11px] p-1 text-white rounded text-center;
+}
+
+.bg-hover {
+  @apply hover:bg-black/20 hover:dark:bg-white/10;
+}
+
+.container {
+  @apply rounded-2xl border border-color dark:bg-fif bg-white shadow-xl shadow-black/50;
+}
+
+::-webkit-scrollbar {
+  width: 10px; /* Adjust as needed */
+  opacity: 0 !important;
+}
+
+::-webkit-scrollbar-track {
+  background: #fff; /* Dark track color */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(173, 173, 173); /* Dark track color */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #d1d1d1; /* Dark thumb color */
+  cursor: pointer;
+  border: solid rgba(0, 0, 0, 0.221) 0.5px;
+}
+
+html.dark ::-webkit-scrollbar-track {
+  background: #111111; /* Dark track color */
+}
+
+html.dark ::-webkit-scrollbar-thumb {
+  background-color: #262626ff; /* Dark thumb color */
+  border: solid #fffff219 0.5px;
+}
+html.dark ::-webkit-scrollbar-thumb:hover {
+  background: rgb(26, 26, 26) !important;
+}
+
+.scroll-hover {
+  @apply group-hover:[&::-webkit-scrollbar-track]:!bg-[#00000222]  [&::-webkit-scrollbar-track]:!bg-[#fffff000] group-hover:[&::-webkit-scrollbar-thumb]:!border-white/10  [&::-webkit-scrollbar-thumb]:!border-transparent [&::-webkit-scrollbar]:!w-2;
+}
+
+.scroll-rounded {
+  @apply [&::-webkit-scrollbar-track]:rounded-md [&::-webkit-scrollbar-thumb]:rounded-md;
+}
+
+.scrollnone {
+  overflow: auto;
+  /* Hide default scrollbar */
+  scrollbar-width: none; /* Not fully supported yet, but helps */
+}
+
+.scrollnone::-webkit-scrollbar {
+  display: none; /* Hide scrollbar track */
+}
+
+.fadeIn {
+  animation: fade-in 1.2s;
+}
+.popFade {
+  animation: fade-in 0.3s;
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 100;
+  }
+}
+
+.fadeUp {
+  animation: fade-Up 0.7s;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 100;
+  }
+}
+
+.fadeUp {
+  animation: fade-Up 0.7s;
+}
+
+@keyframes fade-Up {
+  from {
+    transform: translatey(40px);
+    opacity: 0;
+  }
+  to {
+    transform: translatey(0px);
+    opacity: 100;
+  }
+}
+
+.apexcharts-canvas {
+  max-width: 100% !important;
+  min-width: 100% !important;
+}
+
+.apexcharts-svg {
+  overflow: visible !important;
+}
+
+.dark {
+  --toastify-color-dark: #262626 !important;
+  --toastify-text-color-dark: #fff !important;
+}
+
+:root {
+  --toastify-color-dark: #ededed;
+  --toastify-text-color-dark: #262626;
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: black;
+  box-shadow: none;
+}
+
+html.dark input:-webkit-autofill,
+html.dark input:-webkit-autofill:hover,
+html.dark input:-webkit-autofill:focus,
+html.dark input:-webkit-autofill:active {
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: white;
+  box-shadow: none;
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
