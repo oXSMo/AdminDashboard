@@ -12,9 +12,7 @@ export const usetGetUsersDetails = () => {
   const getDetails = async () => {
     try {
       setloading(true);
-      const resp = await axios(
-        "https://fixiiit.store/api/dashboard/userDetails"
-      );
+      const resp = await axios("/api/dashboard/userDetails");
       setdetails(resp.data);
     } catch (error) {
       seterr(true);
@@ -43,9 +41,7 @@ export const useGetAllUsers = ({ page, filter }) => {
 
     try {
       setloading(true);
-      const resp = await axios.get(
-        `https://fixiiit.store/api/auth/all?${args.join("&")}`
-      );
+      const resp = await axios.get(`/api/auth/all?${args.join("&")}`);
       setusers(resp.data);
     } catch (error) {
       seterr(true);
@@ -70,9 +66,7 @@ export const useGetOneUser = (_id) => {
   const getOne = async () => {
     try {
       setloading(true);
-      const resp = await axios.get(
-        `https://fixiiit.store/api/auth/getone/${_id}`
-      );
+      const resp = await axios.get(`/api/auth/getone/${_id}`);
       setuser(resp.data);
     } catch (error) {
       seterr(true);
@@ -95,9 +89,7 @@ export const useDeleteUser = () => {
   const Delete = async (_id) => {
     try {
       setloading(true);
-      const resp = await axios.delete(
-        `https://fixiiit.store/api/auth/delete/${_id}`
-      );
+      const resp = await axios.delete(`/api/auth/delete/${_id}`);
       toast.success("Account Deleted");
     } catch (error) {
       seterr(true);
@@ -126,10 +118,7 @@ export const useCreateUser = () => {
 
     try {
       setloading(true);
-      const resp = await axios.post(
-        "https://fixiiit.store/api/auth/createUser",
-        credentials
-      );
+      const resp = await axios.post("/api/auth/createUser", credentials);
       toast.success("Account Created Successfuly");
       navigate("/users");
       seterr({ username: "", email: "", password: "", confirmPassword: "" });
@@ -190,10 +179,7 @@ export const useUpdateUser = (_id) => {
     if (checkUser(credentials, seterr)) return;
     try {
       setloading(true);
-      const resp = await axios.put(
-        `https://fixiiit.store/api/auth/update/${_id}`,
-        credentials
-      );
+      const resp = await axios.put(`/api/auth/update/${_id}`, credentials);
       seterr({ username: "", email: "", password: "", confirmPassword: "" });
       toast.success("Profile Updated Successfuly");
     } catch (error) {
