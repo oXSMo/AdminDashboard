@@ -193,6 +193,8 @@ export const useUpdateUser = (_id) => {
   return { update, loading, err };
 };
 
+//////!   LOGIN   !//////
+
 export const useLogin = () => {
   const [loading, setloading] = useState(false);
   const [err, setErr] = useState({ email: "", password: "" });
@@ -219,9 +221,13 @@ export const useLogin = () => {
       return;
     }
     setloading(true);
+
     try {
       const resp = await axios.post("/api/auth/", { email, password });
       setErr({ email: "", password: "" });
+      localStorage.setItem("isAdmin", resp.data.isAdmin.toString());
+
+      window.location.reload();
     } catch (error) {
       if (error.response.status === 402 || error.response.status === 403)
         setErr({

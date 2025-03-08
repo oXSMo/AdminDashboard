@@ -29,8 +29,13 @@ function Navbar() {
   return (
     <nav className="w-full h-14 px-6 items-center grid grid-cols-3 sticky top-0 dark:bg-fif bg-white border-b dark:shadow-none shadow-md shadow-black/10 border-color z-50">
       <article className="flex  gap-1">
-        <aside onClick={()=>setshow(true)} className="rounded-full hs-tooltip md:hidden cursor-pointer [--placement:bottom] text-lg hover:bg-black/10 dark:hover:bg-white/10 w-9 h-9 grid place-content-center">
-          <TbLayoutSidebarLeftExpandFilled className={`duration-200 ${!show ? "rotate-0" : "-rotate-180"}`} />
+        <aside
+          onClick={() => setshow(true)}
+          className="rounded-full hs-tooltip md:hidden cursor-pointer [--placement:bottom] text-lg hover:bg-black/10 dark:hover:bg-white/10 w-9 h-9 grid place-content-center"
+        >
+          <TbLayoutSidebarLeftExpandFilled
+            className={`duration-200 ${!show ? "rotate-0" : "-rotate-180"}`}
+          />
           <span
             className="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block  absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded shadow-sm dark:bg-neutral-700"
             role="tooltip"
@@ -172,7 +177,12 @@ const AdminDropDown = ({ setisDark, isDark }) => {
             <div className="w-full h-px dark:bg-white/20 bg-gray-400" />
 
             <div className="p-1">
-              <NAV icon={<MdLogout className="text-red-600 text-lg" />}>
+              <NAV
+                onClick={() => {
+                  localStorage.clear(), window.location.reload();
+                }}
+                icon={<MdLogout className="text-red-600 text-lg" />}
+              >
                 <h1 className="text-red-600">SignOut</h1>
               </NAV>
             </div>
