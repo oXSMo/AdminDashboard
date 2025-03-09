@@ -5,6 +5,7 @@ import {
   createCategory,
   deleteCategory,
   getCategories,
+  getCategoriesDash,
   getCategory,
   updateCategory,
 } from "../controllers/category.js";
@@ -12,6 +13,7 @@ import {
 const router = express.Router();
 
 router
+  .get("/dashboard", userAuth, adminAuth, getCategoriesDash)
   .post("/", userAuth, adminAuth, createCategory)
   .get("/", getCategories)
   .get("/info/:_id", categoryInfo)

@@ -1,7 +1,7 @@
 import React from "react";
 import { MdCheck, MdClose, MdContentCopy, MdEdit } from "react-icons/md";
 import { useDeleteUser, useGetOneUser } from "../../Hooks/useUser";
-import { FaEdit, FaRegEdit, FaRegTrashAlt } from "react-icons/fa";
+import {  FaRegEdit, FaRegTrashAlt } from "react-icons/fa";
 import { Avatar } from "./UserOverview";
 import moment from "moment";
 import { useClipboard } from "../../Utils/Hooks";

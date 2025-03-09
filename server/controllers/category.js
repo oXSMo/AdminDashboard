@@ -104,3 +104,63 @@ export const categoryInfo = async ({ params }, res) => {
     res.status(401).json(error);
   }
 };
+
+//////////!   GET CATEGORIES DASHBOARD  !//////////
+
+export const getCategoriesDash = async (req, res) => {
+  try {
+    const categories = await Category.aggregate([
+      {
+        $facet: {
+          total: [{ $count: "total" }, { $project: { total: 1 } }],
+          category: [
+            {
+              $lookup: {
+                from: "items", // Join with the orders collection
+                localField: "_id",
+                foreignField: "category",
+                pipeline: [{ $project: { _id: 1 } }], // Field in orders referencing the user
+                as: "items",
+              },
+            },
+            {
+              $lookup: {
+                from: "orders",
+                let: { itemIds: "$items._id" },
+                pipeline: [
+                  {
+                    $match: {
+                      $expr: { $in: ["$item", "$$itemIds"] }, // Match orders with these items
+                    },
+                  },
+                  { $sort: { createdAt: -1 } },
+                  { $limit: 1 },
+                  { $project: { createdAt: 1, totalPrice: 1 } }, // Optimize: fetch only the latest order
+                ],
+                as: "orders",
+              },
+            },
+            {
+              $project: {
+                name: 1,
+                image: 1,
+                items: { $size: "$items" },
+                ordersCount: { $size: "$orders" },
+                totalSales: {
+                  $sum: "$orders.totalPrice", // Sum all order prices
+                },
+                orders: 1,
+              },
+            },
+          ],
+        },
+      },
+    ]);
+    res.status(202).json({
+      total: categories[0].total[0].total,
+      categories: categories[0].category,
+    });
+  } catch (error) {
+    res.status(401).json(error);
+  }
+};

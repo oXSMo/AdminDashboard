@@ -96,7 +96,7 @@ const Table = ({ filter, setfilter, users, getAll }) => {
   const [userId, setuserId] = useState();
   const [open, setopen] = useState(false);
 
-  console.log(users.users);
+ 
 
   return (
     <section className="w-full mt-4 max-h-[500px] min-h-[300px] overflow-auto  [&::-webkit-scrollbar]:h-[8px]">

@@ -20,7 +20,6 @@ const orderSchema = mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ["pending", "processing", "shipped", "delivered", "cancelled"],
       default: "pending",
     },
     options: [{ type: mongoose.Schema.Types.ObjectId, ref: "Option" }],

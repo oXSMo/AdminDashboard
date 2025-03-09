@@ -17,6 +17,7 @@ import EditOrder from "./Pages/Orders/EditOrder";
 import Test from "./Pages/Test";
 import Authroutes from "./Pages/Auth/Auth.routes";
 import Auth from "./Pages/Auth/Auth";
+import CategoryOverView from "./Pages/Categories/CategoryOverView";
 
 function App() {
   const location = useLocation();
@@ -46,6 +47,7 @@ function App() {
                 <Route path="/orders" element={<OrdersOverview />} />
                 <Route path="/addOrder" element={<CreateOrder />} />
                 <Route path="/editOrder/:_id" element={<EditOrder />} />
+                <Route path="/categories" element={<CategoryOverView />} />
                 <Route path="/test" element={<Test />} />
               </Routes>
             </aside>

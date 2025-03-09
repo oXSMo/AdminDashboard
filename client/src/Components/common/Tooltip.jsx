@@ -14,7 +14,7 @@ function Tooltip({
   offSet = 5,
   placement = "bottom-left",
   className = "",
-  strategy= "absolute"
+  strategy = "absolute",
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const arrowRef = useRef(null);

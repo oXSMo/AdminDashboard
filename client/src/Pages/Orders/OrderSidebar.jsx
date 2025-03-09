@@ -2,7 +2,7 @@ import React from "react";
 import { MdCheck, MdClose, MdContentCopy } from "react-icons/md";
 import { Link } from "react-router-dom";
 import Tooltip from "../../Components/common/Tooltip";
-import { FaRegTrashAlt } from "react-icons/fa";
+import { FaRegEdit, FaRegTrashAlt } from "react-icons/fa";
 import Accordion from "../../Components/common/Accordion";
 import { useClipboard } from "../../Utils/Hooks";
 import { color } from "../Users/UserTable";
@@ -186,10 +186,11 @@ function OrderSidebar({ set, o, getAll }) {
       <footer className="border-t border-color px-4 py-2.5 grid grid-cols-2 gap-4">
         <Link
           onClick={() => set(false)}
-            to={`/editOrder/${o._id}`}
+          to={`/editOrder/${o._id}`}
           className="button w-full flex text-white items-center justify-center gap-2 bg-blue-600 !py-2.5"
         >
-          Edit User
+          <FaRegEdit />
+          Edit Order
         </Link>
         <Tooltip>
           <button
