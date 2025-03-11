@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useUploadImg } from "../Utils/Hooks";
 import { useNavigate } from "react-router-dom";
+import { shipSlice } from "../Store/dashboard";
+import { useGetOneUser } from "./useUser";
 
 //////!   CREATE NEW ORDER   !//////
 
@@ -11,7 +13,7 @@ export const useCreateOrder = () => {
   const [err, seterr] = useState(false);
   const { upload, image } = useUploadImg();
   const navigate = useNavigate();
-  
+
   const create = async (credentials) => {
     try {
       setloading(true);
@@ -145,6 +147,33 @@ export const useGetOrder = (_id) => {
   return { loading, err, getOrder, order };
 };
 
+//////!   CREATE COIL   !//////
+
+export const useCreateCoil = () => {
+  const [loading, setloading] = useState(false);
+  const [err, seterr] = useState(false);
+
+  const create = async (credenitals, _id) => {
+    try {
+      setloading(true);
+
+      const resp = await axios.post(
+        `/api/order/coil/${_id || "67901da92d8f14643a385852"}`,
+        credenitals
+      );
+
+      toast.success("Coil Created Successfuly");
+    } catch (error) {
+      seterr(true);
+      toast.error("Somthing Went Wrong");
+    } finally {
+      setloading(false);
+    }
+  };
+
+  return { loading, err, create };
+};
+
 //////!   GET COIL   !//////
 
 export const useGetTracking = (Tracking) => {
@@ -169,4 +198,33 @@ export const useGetTracking = (Tracking) => {
   }, []);
 
   return { loading, err, getOne, tracking };
+};
+
+//////!   UPDATE COIL CREDENITALS   !//////
+
+export const useCoilCred = (o, u) => {
+  const { setcredentials: setCoil } = shipSlice();
+  const navigate = useNavigate();
+  const { user, loading } = useGetOneUser(u._id);
+
+  const send = () => {
+    if (user) {
+      setCoil({
+        Client: user?.username,
+        MobileA: user?.phoneNumber,
+        Adresse: user?.streetAddress1,
+        Commune: user?.city,
+        Total: o?.totalPrice,
+        TProduit: o?.item?.name,
+        Confrimee: "",
+        TypeColis: "0",
+        TypeLivraison: "0",
+        IDWilaya: user?.state,
+        Note: o?.node,
+      });
+      navigate("/shipping")
+    }
+  };
+
+  return { send, loading };
 };

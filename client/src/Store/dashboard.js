@@ -28,3 +28,35 @@ export const orderSlice = create((set) => ({
       credentials: typeof fn === "function" ? fn(state.credentials) : fn,
     })),
 }));
+
+export const categorySlice = create((set) => ({
+  credentials: {
+    name: "",
+    image: "",
+    description: "",
+  },
+  setcredentials: (fn) =>
+    set((state) => ({
+      credentials: typeof fn === "function" ? fn(state.credentials) : fn,
+    })),
+}));
+
+export const shipSlice = create((set) => ({
+  credentials: {
+    Client: "",
+    MobileA: "",
+    Adresse: "",
+    Commune: "",
+    Total: 0,
+    TProduit: "",
+    Confrimee: "",
+    TypeColis: "0",
+    TypeLivraison: "0",
+    IDWilaya: "1",
+    Note: "",
+  },
+  setcredentials: (fn) =>
+    set((state) => ({
+      credentials: typeof fn === "function" ? fn(state.credentials) : fn,
+    })),
+}));

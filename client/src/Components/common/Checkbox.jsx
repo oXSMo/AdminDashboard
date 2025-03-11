@@ -1,7 +1,7 @@
 import React from "react";
 import { FaCheck } from "react-icons/fa";
 
-export default function   Checkbox({
+export default function Checkbox({
   onCheck,
   onChange,
   check,
@@ -26,7 +26,9 @@ export default function   Checkbox({
       >
         {" "}
         <FaCheck
-          className={`duration-300 text-white scale-75 ${!check && "!scale-0 opacity-0"}`}
+          className={`duration-300 text-white scale-75 ${
+            !check && "!scale-0 opacity-0"
+          }`}
         />
       </div>
       {text}

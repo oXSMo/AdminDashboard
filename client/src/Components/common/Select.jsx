@@ -92,7 +92,10 @@ function Select({
       {true && (
         <div
           ref={refs.setFloating}
-          style={{...floatingStyles,width: refs?.reference?.current?.offsetWidth}}
+          style={{
+            ...floatingStyles,
+            width: refs?.reference?.current?.offsetWidth,
+          }}
           className={`bg-color space-y-0.5 relative z-40 max-h-48 overflow-y-auto rounded-lg popFade shadow-lg shadow-black/30 border border-color scroll-rounded  p-1 text-sm ${
             isOpen ? "visible" : "invisible"
           } ${classPrefix}`}

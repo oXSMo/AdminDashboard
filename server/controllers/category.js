@@ -144,6 +144,7 @@ export const getCategoriesDash = async (req, res) => {
               $project: {
                 name: 1,
                 image: 1,
+                description: 1,
                 items: { $size: "$items" },
                 ordersCount: { $size: "$orders" },
                 totalSales: {

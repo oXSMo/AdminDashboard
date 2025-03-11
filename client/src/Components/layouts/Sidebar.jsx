@@ -11,7 +11,7 @@ import {
   MdLibraryAdd,
   MdPersonAdd,
 } from "react-icons/md";
-import { FaBoxes } from "react-icons/fa";
+import { FaBoxes, FaShippingFast } from "react-icons/fa";
 import { AiFillProduct } from "react-icons/ai";
 import { TbLayoutSidebarRightExpandFilled } from "react-icons/tb";
 
@@ -126,6 +126,14 @@ function Sidebar() {
 
         <Title open={open} title="OTHER" />
 
+        <Nav
+          link="/shipping"
+          icon={<FaShippingFast className="text-xl" />}
+          open={open}
+          title="Express"
+        >
+          Express
+        </Nav>
         <Nav
           link="/categories"
           icon={<MdCategory className="text-xl" />}

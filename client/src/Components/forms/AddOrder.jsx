@@ -201,7 +201,6 @@ function AddOrder({ credentials, setcredentials, handleSubmit, loading }) {
                 list={categories?.map((c) => c.name)}
                 name="category"
                 state={credentials}
-                
                 className="!text-xs"
                 placement="bottom-start"
                 set={setcredentials}
@@ -285,7 +284,10 @@ function AddOrder({ credentials, setcredentials, handleSubmit, loading }) {
             <div className="w-px h-4 mb-1 dark:bg-gray-500 bg-gray-800" />
             <button
               disabled={
-                !credentials.item || !credentials.user || !credentials.status || loading
+                !credentials.item ||
+                !credentials.user ||
+                !credentials.status ||
+                loading
               }
               onClick={handleSubmit}
               className="text-sm hover:underline text-blue-500 disabled:pointer-events-none disabled:opacity-60"
@@ -303,7 +305,7 @@ function AddOrder({ credentials, setcredentials, handleSubmit, loading }) {
   );
 }
 
-const InputTitle = ({
+export const InputTitle = ({
   title,
   name,
   set,
@@ -311,10 +313,13 @@ const InputTitle = ({
   placeholder,
   type = "text",
   value = true,
+  classTitle = "",
 }) => {
   return (
     <aside className="">
-      <h1 className="mb-1.5 opacity-90 text-[13px] font-normal">{title}</h1>
+      <h1 className={`mb-1.5 opacity-90 text-[13px] font-normal ${classTitle}`}>
+        {title}
+      </h1>
       <Input
         name={name}
         set={set}

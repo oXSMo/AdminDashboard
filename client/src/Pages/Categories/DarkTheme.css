@@ -1,0 +1,11 @@
+/* DarkTheme.css */
+.ql-toolbar {
+  background-color: #33333321;
+  border-radius: 5px 5px 0 0;
+  @apply border dark:!border-[#555] !border-[#00000072]
+}
+
+.ql-container {
+  border: 1px solid #555 !important;
+  border-radius: 0 0 5px 5px;
+}

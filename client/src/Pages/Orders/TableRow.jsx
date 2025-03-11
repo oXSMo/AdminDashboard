@@ -8,9 +8,15 @@ import { useClickOut, useClipboard } from "../../Utils/Hooks";
 import DropDown from "../../Components/common/DropDown";
 import { BsTrash } from "react-icons/bs";
 import { MdContentCopy, MdEdit, MdMoreHoriz } from "react-icons/md";
-import { Link } from "react-router-dom";
-import { useDeleteOrderById, useUpdateOrder } from "../../Hooks/useOrder";
+import { Link, useNavigate } from "react-router-dom";
+import {
+  useCoilCred,
+  useDeleteOrderById,
+  useUpdateOrder,
+} from "../../Hooks/useOrder";
 import Tooltip from "../../Components/common/Tooltip";
+import { shipSlice } from "../../Store/dashboard";
+import { FaShippingFast } from "react-icons/fa";
 
 export const TableRow = ({
   setopenSide,
@@ -181,6 +187,8 @@ const Dropdown = ({ o, credentials, getAll, handleUpdate }) => {
   const { copyToClipboard, isCopied } = useClipboard();
   const { Delete } = useDeleteOrderById();
 
+  const { loading, send } = useCoilCred(o, o.user);
+
   const handleDelete = async (e) => {
     e.preventDefault();
     await Delete(o._id);
@@ -212,6 +220,16 @@ const Dropdown = ({ o, credentials, getAll, handleUpdate }) => {
           className="rounded-md disabled:opacity-40 disabled:pointer-events-none hover:bg-white/10 p-0.5 px-2 py-1 mx-1 items-center font-medium flex gap-2"
         >
           <MdEdit /> Edit Item
+        </button>
+
+        {/* EDIT  */}
+
+        <button
+          disabled={loading}
+          onClick={send}
+          className="rounded-md disabled:opacity-40 disabled:pointer-events-none hover:bg-white/10 p-0.5 px-2 py-1 mx-1 items-center font-medium flex gap-2"
+        >
+          <FaShippingFast /> Send Coil
         </button>
 
         <div className="w-full h-px bg-white/20 my-1" />

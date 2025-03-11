@@ -18,6 +18,8 @@ import Test from "./Pages/Test";
 import Authroutes from "./Pages/Auth/Auth.routes";
 import Auth from "./Pages/Auth/Auth";
 import CategoryOverView from "./Pages/Categories/CategoryOverView";
+import CategoryCreate from "./Pages/Categories/CategoryCreate";
+import ShippingCreate from "./Pages/Shipping/ShippingCreate";
 
 function App() {
   const location = useLocation();
@@ -48,6 +50,7 @@ function App() {
                 <Route path="/addOrder" element={<CreateOrder />} />
                 <Route path="/editOrder/:_id" element={<EditOrder />} />
                 <Route path="/categories" element={<CategoryOverView />} />
+                <Route path="/shipping" element={<ShippingCreate />} />
                 <Route path="/test" element={<Test />} />
               </Routes>
             </aside>
@@ -56,7 +59,8 @@ function App() {
         </main>
         <ToastContainer
           position="bottom-right"
-          autoClose={3500}
+          autoClose={2500}
+          limit={1}
           hideProgressBar={false}
           newestOnTop={false}
           closeOnClick={false}

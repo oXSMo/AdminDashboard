@@ -6,22 +6,23 @@ import Modal from "../../Components/common/Modal";
 import { useClipboard } from "../../Utils/Hooks";
 import Tooltip from "../../Components/common/Tooltip";
 import moment from "moment";
+import CategoryCreate from "./CategoryCreate";
+import CategoryEdit from "./CategoryEdit";
 
 function CategoryOverView() {
-  const { categories, loading } = useGetDashCategories();
-
-  console.log(categories);
+  const { categories, loading, getCategories } = useGetDashCategories();
+  const [create, setcreate] = useState(false);
 
   return (
     <section className="">
       <header className="flex justify-between mb-4">
         <h1 className="font-bold tracking-wide text-xl">Categories</h1>
-        <Link
-          to="/createCategory"
+        <div
+          onClick={() => setcreate(true)}
           className="flex gap-2 button bg-blue-600  text-sm !px-3 !pr-4 text-white"
         >
           <MdAdd /> Add Category
-        </Link>
+        </div>
       </header>
 
       <main className="container grid grid-rows-[auto_1fr] min-h-[70vh] 2xl:mx-auto">
@@ -41,23 +42,26 @@ function CategoryOverView() {
               </h2>
             </div>
           ) : (
-            categories?.categories?.map((c) => <Category category={c} />)
+            categories?.categories?.map((c) => <Category category={c} getCategories={getCategories}/>)
           )}
         </section>
       </main>
+      <Modal onClose={setcreate} open={create}>
+        <CategoryCreate set={setcreate} getCategories={getCategories}/>
+      </Modal>
     </section>
   );
 }
 
-const Category = ({ category }) => {
+const Category = ({ category,getCategories }) => {
   const [modal, setmodal] = useState(false);
-  const navigate = useNavigate();
+  const [edit, setedit] = useState(false);
 
   const { copyToClipboard, isCopied } = useClipboard();
   return (
     <>
       <article
-        onClick={() => navigate(`/editCategory/${category._id}`)}
+        onClick={() => setedit(true)}
         className="grid md:grid-cols-[auto_1fr] place-content-center hover:bg-black/15 rounded-t-lg cursor-pointer p-4 items-center gap-6  border-b border-color"
       >
         {/* IMAGE  */}
@@ -147,6 +151,10 @@ const Category = ({ category }) => {
           src={category.image}
           className="max-w-[90vw] max-h-[90vh] rounded-2xl"
         />
+      </Modal>
+
+      <Modal onClose={setedit} open={edit}>
+        <CategoryEdit category={category} set={setedit} getCategories={getCategories}/>
       </Modal>
     </>
   );

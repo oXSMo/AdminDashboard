@@ -18,12 +18,12 @@ const Modal = ({ children, className, open, onClose, closabel = true }) => {
   useEffect(() => {
     if (open) {
       setkill(false);
-      setTimeout(() => {
+      var t1 = setTimeout(() => {
         setanimate(true);
       }, 100);
     } else {
       setanimate(false);
-      setTimeout(() => {
+      var t2 = setTimeout(() => {
         setkill(true);
       }, 400);
     }
@@ -32,6 +32,11 @@ const Modal = ({ children, className, open, onClose, closabel = true }) => {
     } else {
       document.body.style.overflow = "auto"; // or "scroll"
     }
+
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+    };
   }, [open]);
 
   return (
@@ -40,7 +45,7 @@ const Modal = ({ children, className, open, onClose, closabel = true }) => {
         <article
           onClick={() => (!closabel ? handleClick() : onClose(false))}
           className={`fixed inset-0 flex justify-center items-center z-[999] transition-colors ${
-            animate ? "visible bg-black/30" : "invisible"
+            animate ? "visible bg-black/60" : "invisible"
           }`}
         >
           <aside
