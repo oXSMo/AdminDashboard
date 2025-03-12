@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { darkSlice } from "../Store/darktheme";
 import html2canvas from "html2canvas";
 import axios from "axios";
+import html2pdf from "html2pdf.js";
 
 export const useToggleTheme = () => {
   const { isDark, setisDark } = darkSlice();
@@ -150,4 +151,21 @@ export const useUploadImg = () => {
   };
 
   return { loading, err, upload, image };
+};
+
+export const useDownloadInvoic = () => {
+  const invoiceRef = useRef();
+
+  const handleDownload = () => {
+    const options = {
+      margin: 10,
+      filename: "invoice.pdf",
+      image: { type: "jpeg", quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+    };
+    html2pdf().from(invoiceRef.current).set(options).save();
+  };
+
+  return { invoiceRef, handleDownload };
 };

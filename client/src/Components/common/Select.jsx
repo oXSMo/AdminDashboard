@@ -43,8 +43,6 @@ function Select({
     placement,
   });
 
-  console.log(refs?.reference?.current?.offsetWidth);
-
   return (
     <article ref={ref}>
       {/* Tooltip Trigger (Button) */}

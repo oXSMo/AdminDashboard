@@ -141,12 +141,26 @@ export const getCategoriesDash = async (req, res) => {
               },
             },
             {
+              $lookup: {
+                from: "orders",
+                let: { itemIds: "$items._id" },
+                pipeline: [
+                  {
+                    $match: {
+                      $expr: { $in: ["$item", "$$itemIds"] }, // Match orders with these items
+                    },
+                  },
+                ],
+                as: "ORDERS",
+              },
+            },
+            {
               $project: {
                 name: 1,
                 image: 1,
                 description: 1,
                 items: { $size: "$items" },
-                ordersCount: { $size: "$orders" },
+                ordersCount: { $size: "$ORDERS" },
                 totalSales: {
                   $sum: "$orders.totalPrice", // Sum all order prices
                 },

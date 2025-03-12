@@ -60,3 +60,21 @@ export const shipSlice = create((set) => ({
       credentials: typeof fn === "function" ? fn(state.credentials) : fn,
     })),
 }));
+
+export const itemSlice = create((set) => ({
+  credentials: { name: "", description: "", available: false, price: 0 },
+  setcredentials: (fn) =>
+    set((state) => ({
+      credentials: typeof fn === "function" ? fn(state.credentials) : fn,
+    })),
+  options: [],
+  setoptions: (fn) =>
+    set((state) => ({
+      options: typeof fn === "function" ? fn(state.options) : fn,
+    })),
+  optionsCount: 1,
+  setoptionsCount: (fn) =>
+    set((state) => ({
+      optionsCount: typeof fn === "function" ? fn(state.optionsCount) : fn,
+    })),
+}));

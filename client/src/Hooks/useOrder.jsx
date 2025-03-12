@@ -205,25 +205,25 @@ export const useGetTracking = (Tracking) => {
 export const useCoilCred = (o, u) => {
   const { setcredentials: setCoil } = shipSlice();
   const navigate = useNavigate();
-  const { user, loading } = useGetOneUser(u._id);
+  const { loading, getOne } = useGetOneUser(u._id, false);
 
-  const send = () => {
-    if (user) {
-      setCoil({
-        Client: user?.username,
-        MobileA: user?.phoneNumber,
-        Adresse: user?.streetAddress1,
-        Commune: user?.city,
-        Total: o?.totalPrice,
-        TProduit: o?.item?.name,
-        Confrimee: "",
-        TypeColis: "0",
-        TypeLivraison: "0",
-        IDWilaya: user?.state,
-        Note: o?.node,
-      });
-      navigate("/shipping")
-    }
+  const send = async () => {
+    const user = await getOne();
+
+    setCoil({
+      Client: user?.username,
+      MobileA: user?.phoneNumber,
+      Adresse: user?.streetAddress1,
+      Commune: user?.city,
+      Total: o?.totalPrice,
+      TProduit: o?.item?.name,
+      Confrimee: "",
+      TypeColis: "0",
+      TypeLivraison: "0",
+      IDWilaya: user?.state,
+      Note: o?.node,
+    });
+    navigate("/shipping");
   };
 
   return { send, loading };

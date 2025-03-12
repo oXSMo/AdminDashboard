@@ -3,8 +3,9 @@ import Checkbox from "../../Components/common/Checkbox";
 import { LuPanelRightOpen } from "react-icons/lu";
 import moment from "moment";
 import Status from "./Status";
+import { LiaFileInvoiceDollarSolid } from "react-icons/lia";
 
-import { useClickOut, useClipboard } from "../../Utils/Hooks";
+import { useClipboard, useDownloadInvoic } from "../../Utils/Hooks";
 import DropDown from "../../Components/common/DropDown";
 import { BsTrash } from "react-icons/bs";
 import { MdContentCopy, MdEdit, MdMoreHoriz } from "react-icons/md";
@@ -17,6 +18,10 @@ import {
 import Tooltip from "../../Components/common/Tooltip";
 import { shipSlice } from "../../Store/dashboard";
 import { FaShippingFast } from "react-icons/fa";
+import InvoiceOrder from "./InvoiceOrder";
+import { useGetOneUser } from "../../Hooks/useUser";
+import { set } from "mongoose";
+import Modal from "../../Components/common/Modal";
 
 export const TableRow = ({
   setopenSide,
@@ -183,9 +188,13 @@ export const TableRow = ({
   );
 };
 
+////////!    DROP DOWN    !////////
+
 const Dropdown = ({ o, credentials, getAll, handleUpdate }) => {
   const { copyToClipboard, isCopied } = useClipboard();
   const { Delete } = useDeleteOrderById();
+
+  const [modal, setmodal] = useState(false);
 
   const { loading, send } = useCoilCred(o, o.user);
 
@@ -196,56 +205,70 @@ const Dropdown = ({ o, credentials, getAll, handleUpdate }) => {
   };
 
   return (
-    <DropDown>
-      <button className="p-1 rounded-md text-xl hover:bg-white/15 mr-2">
-        <MdMoreHoriz />
-      </button>
-      <article className="w-36 dark:bg-fif bg-[#122732] text-white shadow-lg shadow-black/40 border border-color z-40 rounded-md py-1 text-sm grid space-y-0.5">
-        {/* COPY ID  */}
-        <div
-          onClick={() => copyToClipboard(o._id)}
-          className="rounded-md hover:bg-white/10 p-0.5 px-2 py-1 mx-1 items-center font-medium flex gap-2"
-        >
-          <MdContentCopy /> {isCopied ? "Copied" : "Copy Id"}
-        </div>
-
-        {/* EDIT  */}
-
-        <button
-          disabled={
-            credentials.status === o.status &&
-            credentials.totalPrice === o.totalPrice
-          }
-          onClick={handleUpdate}
-          className="rounded-md disabled:opacity-40 disabled:pointer-events-none hover:bg-white/10 p-0.5 px-2 py-1 mx-1 items-center font-medium flex gap-2"
-        >
-          <MdEdit /> Edit Item
+    <>
+      <DropDown strategy="fixed" placement="bottom-start">
+        <button className="p-1 rounded-md text-xl hover:bg-white/15 mr-2">
+          <MdMoreHoriz />
         </button>
-
-        {/* EDIT  */}
-
-        <button
-          disabled={loading}
-          onClick={send}
-          className="rounded-md disabled:opacity-40 disabled:pointer-events-none hover:bg-white/10 p-0.5 px-2 py-1 mx-1 items-center font-medium flex gap-2"
-        >
-          <FaShippingFast /> Send Coil
-        </button>
-
-        <div className="w-full h-px bg-white/20 my-1" />
-
-        {/* DELETE  */}
-
-        <Tooltip strategy="fixed" placement="top-start">
+        <article className="w-36 dark:bg-fif bg-[#122732] text-white shadow-lg shadow-black/40 border border-color z-40 rounded-md py-1 text-sm grid space-y-0.5">
+          {/* COPY ID  */}
           <div
-            onContextMenu={handleDelete}
-            className="rounded-md hover:bg-white/10 p-0.5 px-2 py-1 mx-1 dark:text-red-600 text-red-500 items-center font-medium flex gap-2"
+            onClick={() => copyToClipboard(o._id)}
+            className="rounded-md hover:bg-white/10 p-0.5 px-2 py-1 mx-1 items-center font-medium flex gap-2"
           >
-            <BsTrash /> Delete Item
+            <MdContentCopy /> {isCopied ? "Copied" : "Copy Id"}
           </div>
-          <span className="tooltip">Right Click</span>
-        </Tooltip>
-      </article>
-    </DropDown>
+
+          {/* EDIT  */}
+
+          <button
+            disabled={
+              credentials.status === o.status &&
+              credentials.totalPrice === o.totalPrice
+            }
+            onClick={handleUpdate}
+            className="rounded-md disabled:opacity-40 disabled:pointer-events-none hover:bg-white/10 p-0.5 px-2 py-1 mx-1 items-center font-medium flex gap-2"
+          >
+            <MdEdit /> Edit Item
+          </button>
+
+          {/* COIL  */}
+
+          <button
+            disabled={loading}
+            onClick={send}
+            className="rounded-md disabled:opacity-40 disabled:pointer-events-none hover:bg-white/10 p-0.5 px-2 py-1 mx-1 items-center font-medium flex gap-2"
+          >
+            <FaShippingFast /> Send Coil
+          </button>
+
+          {/* INVOICE  */}
+
+          <button
+            onClick={() => setmodal(true)}
+            className="rounded-md disabled:opacity-40 disabled:pointer-events-none hover:bg-white/10 p-0.5 px-2 py-1 mx-1 items-center font-medium flex gap-2"
+          >
+            <LiaFileInvoiceDollarSolid /> Invoice
+          </button>
+
+          <div className="w-full h-px bg-white/20 my-1" />
+
+          {/* DELETE  */}
+
+          <Tooltip strategy="fixed" placement="top-start">
+            <div
+              onContextMenu={handleDelete}
+              className="rounded-md hover:bg-white/10 p-0.5 px-2 py-1 mx-1 dark:text-red-600 text-red-500 items-center font-medium flex gap-2"
+            >
+              <BsTrash /> Delete Item
+            </div>
+            <span className="tooltip">Right Click</span>
+          </Tooltip>
+        </article>
+      </DropDown>
+      <Modal onClose={setmodal} open={modal}>
+        <InvoiceOrder order={o} set={setmodal}/>
+      </Modal>
+    </>
   );
 };

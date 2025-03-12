@@ -191,7 +191,7 @@ const DropdownMenu = ({ item, getItems }) => {
         {/* EDIT  */}
 
         <Link
-          to={`/item/${item._id}`}
+          to={`/editItem/${item._id}`}
           className="rounded-md hover:bg-white/10 p-0.5 px-2 py-1 mx-1 items-center font-medium flex gap-2"
         >
           <MdEdit /> Edit Item

@@ -14,7 +14,7 @@ function CategoryOverView() {
   const [create, setcreate] = useState(false);
 
   return (
-    <section className="">
+    <section className="fadeIn">
       <header className="flex justify-between mb-4">
         <h1 className="font-bold tracking-wide text-xl">Categories</h1>
         <div

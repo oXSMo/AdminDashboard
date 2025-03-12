@@ -59,15 +59,17 @@ export const useGetAllUsers = ({ page, filter }) => {
 };
 
 //////!   GET ONE USER   !//////
-export const useGetOneUser = (_id) => {
+export const useGetOneUser = (_id, onload = true) => {
   const [loading, setloading] = useState(false);
   const [err, seterr] = useState(false);
   const [user, setuser] = useState();
+
   const getOne = async () => {
     try {
       setloading(true);
       const resp = await axios.get(`/api/auth/getone/${_id}`);
       setuser(resp.data);
+      return resp.data;
     } catch (error) {
       seterr(true);
     } finally {
@@ -76,7 +78,7 @@ export const useGetOneUser = (_id) => {
   };
 
   useEffect(() => {
-    if (_id) getOne();
+    if (_id && onload) getOne();
   }, []);
   return { loading, err, getOne, user };
 };

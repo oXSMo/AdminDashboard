@@ -13,6 +13,7 @@ function DropDown({
   placement = "bottom-left",
   classDropdown = "",
   offSet = 5,
+  strategy = "absolute",
 }) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -25,6 +26,7 @@ function DropDown({
     middleware: [offset(offSet), flip(), shift()], // Adjust tooltip position
     whileElementsMounted: autoUpdate, // Auto-update position
     placement,
+    strategy,
   });
 
   if (children[1] && children[0])
@@ -40,7 +42,7 @@ function DropDown({
             {React.cloneElement(children[1], {
               ref: refs.setFloating,
               style: floatingStyles,
-              onClick: () => setIsOpen(false)
+              onClick: () => setIsOpen(false),
             })}
           </div>
         )}

@@ -29,7 +29,10 @@ export const getOneItem = async (req, res) => {
     const item = await Item.findById(req.params._id)
       .populate({ path: "category", select: "name" })
       .select("-__v");
-    res.status(202).json(item);
+    const options = await Option.find({ item: item._id }).select(
+      "name price description category"
+    );
+    res.status(202).json({ ...item._doc, options });
   } catch (error) {
     res.status(401).json(error);
   }

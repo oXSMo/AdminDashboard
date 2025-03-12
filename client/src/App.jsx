@@ -20,6 +20,8 @@ import Auth from "./Pages/Auth/Auth";
 import CategoryOverView from "./Pages/Categories/CategoryOverView";
 import CategoryCreate from "./Pages/Categories/CategoryCreate";
 import ShippingCreate from "./Pages/Shipping/ShippingCreate";
+import CreateItem from "./Pages/Items/CreateItem";
+import EditItem from "./Pages/Items/EditItem";
 
 function App() {
   const location = useLocation();
@@ -40,7 +42,7 @@ function App() {
           <Sidebar />
           <article className="w-full relative z-40">
             <Navbar />
-            <aside className="p-5 max-w-full !overflow-x-hidden">
+            <aside className="p-5 max-w-full ">
               <Routes>
                 <Route path="/" element={<Dashboard />} />
                 <Route path="/users" element={<UserOverview />} />
@@ -51,6 +53,8 @@ function App() {
                 <Route path="/editOrder/:_id" element={<EditOrder />} />
                 <Route path="/categories" element={<CategoryOverView />} />
                 <Route path="/shipping" element={<ShippingCreate />} />
+                <Route path="/createItem" element={<CreateItem />} />
+                <Route path="/editItem/:_id" element={<EditItem />} />
                 <Route path="/test" element={<Test />} />
               </Routes>
             </aside>

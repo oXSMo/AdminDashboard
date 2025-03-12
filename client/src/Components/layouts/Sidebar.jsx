@@ -143,12 +143,12 @@ function Sidebar() {
           Categories
         </Nav>
         <Nav
-          link="/items"
+          link="/createItem"
           icon={<AiFillProduct className="text-xl" />}
           open={open}
           title="Items"
         >
-          Items
+          Add Item
         </Nav>
       </section>
 

@@ -16,6 +16,8 @@ function Input({
   wait = false,
   value = true,
   err = "",
+  onChange,
+  VALUE,
 }) {
   const timeoutRef = useRef(null);
 
@@ -32,7 +34,9 @@ function Input({
 
   let args = {};
 
-  if (value && !wait) args.value = state[name];
+  if (value && !wait && state) args.value = state[name];
+  
+   if (VALUE) args.value = VALUE;
 
   return (
     <div className="relative">
@@ -51,13 +55,14 @@ function Input({
           type={type}
           className={`outline-none w-full disabled:cursor-not-allowed bg-transparent outline- font-medium tracking-wide dark:text-neutral-300 text-black/70  placeholder:text-black/60 placeholder:dark:text-white/30 placeholder:text-sm ${classInput}`}
           onChange={
-            wait
+            onChange
+              ? onChange
+              : wait
               ? handleChange
               : (e) => set({ ...state, [name]: e.target.value })
           }
           placeholder={placeholder}
           disabled={disabled}
-          
           {...args}
         />
         {children}
