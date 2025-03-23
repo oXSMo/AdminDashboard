@@ -14,14 +14,14 @@ import moment from "moment";
 function OrderSidebar({ set, o, getAll }) {
   const { isCopied, copyToClipboard } = useClipboard();
   const { user } = useGetOneUser(o?.user?._id);
-  const { tracking } = useGetTracking(o.Tracking);
+  const { tracking } = useGetTracking(o?.Tracking);
 
   const { Delete, loading } = useDeleteOrderById();
 
   console.log(getAll);
 
   const handleDelete = async () => {
-    await Delete(o._id);
+    await Delete(o?._id);
     set(false);
     await getAll();
   };
@@ -73,24 +73,24 @@ function OrderSidebar({ set, o, getAll }) {
                 </div>
               </Info>
 
-              <Info title="Category">{o.item.category.name}</Info>
-              <Info title="Item">{o.item.name}</Info>
+              <Info title="Category">{o?.item.category.name}</Info>
+              <Info title="Item">{o?.item.name}</Info>
               <Info title="Price">
                 <div className="">
-                  {o.totalPrice.toLocaleString()}{" "}
+                  {o?.totalPrice.toLocaleString()}{" "}
                   <span className="text-[11px] opacity-60">DA</span>{" "}
                 </div>
               </Info>
               <Info title="Status">
-                <p style={{ color: color(o.status) }}>{o.status}</p>
+                <p style={{ color: color(o?.status) }}>{o?.status}</p>
               </Info>
-              {o.model && <Info title="Model">{o?.model}</Info>}
-              {o.manufacture && (
+              {o?.model && <Info title="Model">{o?.model}</Info>}
+              {o?.manufacture && (
                 <Info title="Manufacture">{o?.manufacture}</Info>
               )}
-              {o.serialNumber && <Info title="Serial">{o?.serialNumber}</Info>}
-              {o.password && <Info title="Password">{o?.password}</Info>}
-              {o.node && <Info title="Note">{o?.node}</Info>}
+              {o?.serialNumber && <Info title="Serial">{o?.serialNumber}</Info>}
+              {o?.password && <Info title="Password">{o?.password}</Info>}
+              {o?.node && <Info title="Note">{o?.node}</Info>}
             </aside>
           </div>
 
@@ -186,7 +186,7 @@ function OrderSidebar({ set, o, getAll }) {
       <footer className="border-t border-color px-4 py-2.5 grid grid-cols-2 gap-4">
         <Link
           onClick={() => set(false)}
-          to={`/editOrder/${o._id}`}
+          to={`/editOrder/${o?._id}`}
           className="button w-full flex text-white items-center justify-center gap-2 bg-blue-600 !py-2.5"
         >
           <FaRegEdit />

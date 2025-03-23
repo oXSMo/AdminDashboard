@@ -78,3 +78,11 @@ export const itemSlice = create((set) => ({
       optionsCount: typeof fn === "function" ? fn(state.optionsCount) : fn,
     })),
 }));
+
+export const profileSlice = create((set) => ({
+  profile: { name: "", description: "", available: false, price: 0 },
+  setprofile: (fn) =>
+    set((state) => ({
+      profile: typeof fn === "function" ? fn(state.profile) : fn,
+    })),
+}));

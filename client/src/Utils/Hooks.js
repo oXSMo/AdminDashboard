@@ -1,6 +1,6 @@
 //////!   TOGGLE BUTTON   !//////
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { darkSlice } from "../Store/darktheme";
 import html2canvas from "html2canvas";
 import axios from "axios";
@@ -168,4 +168,65 @@ export const useDownloadInvoic = () => {
   };
 
   return { invoiceRef, handleDownload };
+};
+
+export const useAnimatedCounter = (target, duration = 2000, stepSize = 1) => {
+  const [current, setCurrent] = useState(target);
+  const prevTargetRef = useRef(target);
+  const animationRef = useRef();
+  const startValueRef = useRef(target);
+
+  useEffect(() => {
+    const prevTarget = prevTargetRef.current;
+    prevTargetRef.current = target;
+    startValueRef.current = current;
+
+    const start = current;
+    const end = target;
+    const range = end - start;
+    const startTime = performance.now();
+
+    const animate = (timestamp) => {
+      const elapsed = timestamp - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+
+      // Calculate total possible steps
+      const totalSteps = Math.ceil(Math.abs(range) / stepSize);
+      // Calculate how many steps we should have taken by now
+      const stepsTaken = Math.floor(progress * totalSteps);
+
+      // Calculate new value
+      let newValue = start + stepsTaken * stepSize * Math.sign(range);
+
+      // Ensure we don't overshoot the target
+      newValue = range > 0 ? Math.min(newValue, end) : Math.max(newValue, end);
+
+      setCurrent(newValue);
+
+      if (progress < 1) {
+        animationRef.current = requestAnimationFrame(animate);
+      } else {
+        setCurrent(end); // Ensure final value is exact
+      }
+    };
+
+    if (prevTarget !== target) {
+      animationRef.current = requestAnimationFrame(animate);
+    }
+
+    return () => {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+    };
+  }, [target, duration, stepSize]);
+
+  const formatNumber = useCallback((num) => {
+    return num.toLocaleString();
+  }, []);
+
+  return {
+    current: formatNumber(current),
+    rawCurrent: current,
+  };
 };

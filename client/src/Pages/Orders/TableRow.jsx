@@ -40,25 +40,25 @@ export const TableRow = ({
   });
 
   const handleUpdate = async () => {
-    await Update(o._id, credentials);
+    await Update(o?._id, credentials);
     await getAll();
   };
 
   return (
     <tr
-      key={o._id}
+      key={o?._id}
       onClick={() => {
         setselect((select) =>
-          !select?.find((e) => e === o._id)
-            ? [...select, o._id]
-            : select?.filter((e) => e !== o._id)
+          !select?.find((e) => e === o?._id)
+            ? [...select, o?._id]
+            : select?.filter((e) => e !== o?._id)
         );
       }}
       className="border-b border-color cursor-pointer hover:bg-black/30 !relative"
     >
       {/* CHECKBOX  */}
       <td className=" pl-2 hs-dropdown-toggle border-r border-color">
-        <Checkbox check={select.find((e) => e === o._id)} />
+        <Checkbox check={select.find((e) => e === o?._id)} />
       </td>
 
       {/* ITEM  */}
@@ -66,7 +66,7 @@ export const TableRow = ({
       <td
         onClick={(e) => {
           e.stopPropagation();
-          setorderId(o._id);
+          setorderId(o?._id);
           setopenDetail(true);
         }}
         className="flex py-2 items-center gap-4 hover:bg-black/60 hover:text-white group border-r border-color relative"
@@ -74,15 +74,15 @@ export const TableRow = ({
         <img
           onClick={(e) => {
             e.stopPropagation();
-            setorderId(o._id);
+            setorderId(o?._id);
             setopen(true);
           }}
-          src={o?.image || o.item.category?.image}
+          src={o?.image || o?.item.category?.image}
           className="rounded-md cursor-pointer w-12 ml-3  h-10"
         />
 
         <h1 className="font-medium tracking-wide text-sm line-clamp-1">
-          {o.item.name}
+          {o?.item.name}
         </h1>
         <span
           //   onClick={(e) => {
@@ -101,14 +101,14 @@ export const TableRow = ({
       <td
         onClick={(e) => {
           e.stopPropagation();
-          setorderId(o._id);
+          setorderId(o?._id);
           o?.user?._id && setopenSide(true);
         }}
         className="p-2 px-3 border-r border-color hover:bg-black/60 hover:text-white relative group"
       >
         <div className="flex items-center gap-14.5">
           <h1 className="font-medium tracking-wide text-sm line-clamp-1 opacity-80">
-            {o.user.username}
+            {o?.user?.username}
           </h1>
         </div>
         <span
@@ -133,7 +133,7 @@ export const TableRow = ({
       <td
         onClick={(e) => e.stopPropagation()}
         onKeyDown={(e) => {
-          if (e.key === "Enter" && o.status !== credentials.status)
+          if (e.key === "Enter" && o?.status !== credentials.status)
             handleUpdate();
         }}
         className="px-3 border-r border-color"
@@ -149,7 +149,7 @@ export const TableRow = ({
       <td
         onClick={(e) => e.stopPropagation()}
         onKeyDown={(e) => {
-          if (e.key === "Enter" && o.totalPrice !== credentials.totalPrice)
+          if (e.key === "Enter" && o?.totalPrice !== credentials.totalPrice)
             handleUpdate();
         }}
         className="px-3 border-r border-color w-24"
@@ -196,11 +196,11 @@ const Dropdown = ({ o, credentials, getAll, handleUpdate }) => {
 
   const [modal, setmodal] = useState(false);
 
-  const { loading, send } = useCoilCred(o, o.user);
+  const { loading, send } = useCoilCred(o, o?.user);
 
   const handleDelete = async (e) => {
     e.preventDefault();
-    await Delete(o._id);
+    await Delete(o?._id);
     await getAll();
   };
 
@@ -213,7 +213,7 @@ const Dropdown = ({ o, credentials, getAll, handleUpdate }) => {
         <article className="w-36 dark:bg-fif bg-[#122732] text-white shadow-lg shadow-black/40 border border-color z-40 rounded-md py-1 text-sm grid space-y-0.5">
           {/* COPY ID  */}
           <div
-            onClick={() => copyToClipboard(o._id)}
+            onClick={() => copyToClipboard(o?._id)}
             className="rounded-md hover:bg-white/10 p-0.5 px-2 py-1 mx-1 items-center font-medium flex gap-2"
           >
             <MdContentCopy /> {isCopied ? "Copied" : "Copy Id"}
@@ -223,8 +223,8 @@ const Dropdown = ({ o, credentials, getAll, handleUpdate }) => {
 
           <button
             disabled={
-              credentials.status === o.status &&
-              credentials.totalPrice === o.totalPrice
+              credentials.status === o?.status &&
+              credentials.totalPrice === o?.totalPrice
             }
             onClick={handleUpdate}
             className="rounded-md disabled:opacity-40 disabled:pointer-events-none hover:bg-white/10 p-0.5 px-2 py-1 mx-1 items-center font-medium flex gap-2"

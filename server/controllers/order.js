@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import Order from "../models/order.module.js";
+import User from "../models/user.module.js";
 
 //////////!   CREATE ORDER   !//////////
 
@@ -173,15 +174,18 @@ export const lastWeekOrders = async (req, res) => {
 
 //////////!   CREATE ORDER FOR USER   !//////////
 
-export const createOrderUser = async({body},res) => {
+export const createOrderUser = async ({ body }, res) => {
   try {
     if (!body?.item) return res.status(404).json("item is missing");
     if (!body?.user) return res.status(404).json("user is missing");
-    const order = await Order.create(body)
 
-    res.status(201).json(order)
+    const usr = await User.findOne({ _id: body.user });
+
+    if (!usr) return res.status(404).json("user not found");
+    const order = await Order.create(body);
+
+    res.status(201).json(order);
   } catch (error) {
-    res.status(401).json(error)
+    res.status(401).json(error);
   }
-}
-
+};

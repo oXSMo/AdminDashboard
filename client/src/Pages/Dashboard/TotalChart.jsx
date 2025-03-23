@@ -2,17 +2,16 @@ import React, { useEffect, useRef, useState } from "react";
 import { dashboardSlice } from "../../Store/dashboard";
 import ReactApexChart from "react-apexcharts";
 import { darkSlice } from "../../Store/darktheme";
-import Select from "../../Components/common/Select";
 import CounterUp from "../../Components/common/CounterUp";
 import { useScreenshot } from "../../Utils/Hooks";
 import { MdAddAPhoto } from "react-icons/md";
-import Tooltip from "../../Components/common/Tooltip";
+import { AnimatedCounter } from "react-animated-counter";
 
 function TotalChart() {
   const { total } = dashboardSlice();
-  const { ref, image, takeScreenshot, downloadImage } = useScreenshot();
-
+  const { ref, takeScreenshot, downloadImage } = useScreenshot();
   const [credenitals, setcredenitals] = useState({ chartTime: "Month" });
+  const [target, setTarget] = useState(0);
 
   const handleScreenshot = async () => {
     const dataUrl = await takeScreenshot();
@@ -20,6 +19,25 @@ function TotalChart() {
       downloadImage(dataUrl, "my-screenshot.png"); // Custom filename
     }
   };
+
+  console.log({ total });
+
+  useEffect(() => {
+    setTarget(
+      total
+        ? credenitals?.chartTime === "Month"
+          ? total?.map((e) => e.totalPrice).reduce((a, b) => a + b)
+          : total
+              ?.map((e, i) => {
+                const inputDate = new Date(e._id);
+                const oneWeekAgo = new Date(inputDate);
+                oneWeekAgo.setDate(inputDate.getDate() - 7)
+                return i < 7 ? e.totalPrice : 0;
+              })
+              .reduce((a, b) => a + b)
+        : 0
+    );
+  }, [total, credenitals.chartTime]);
 
   return (
     <section className="p-4 w-full  border border-color rounded-xl sm:h-[500px] h-[400px] grid grid-rows-[auto_1fr] bg-white dark:bg-fif shadow-lg shadow-black/40">
@@ -31,23 +49,18 @@ function TotalChart() {
             Total This {credenitals.chartTime}
           </h1>
           <h2 className="text-4xl font-medium flex gap-2">
-            {!total ? (
-              0
-            ) : (
-              <CounterUp
-                maxValue={total
-                  ?.map((e) => e.totalPrice)
-                  .reduce((a, b) => a + b)}
-                duration={1500}
-                steps={150}
-              />
-            )}
+            <AnimatedCounter
+              value={target}
+              color="white"
+              fontSize="40px"
+              decimalPrecision={false}
+            />
             <span className="mt-auto opacity-60 text-xl">DA</span>
           </h2>
         </aside>
 
         <article className="flex gap-2">
-          <aside className="grid grid-cols-2 cursor-pointer border  rounded-md gap-1 w-36 font-medium border-color relative  text-xs overflow-hidden">
+          <aside className="grid toggle-count grid-cols-2 cursor-pointer border  rounded-md gap-1 w-36 font-medium border-color relative  text-xs overflow-hidden">
             <span
               className={`absolute w-1/2 duration-300 bg-neutral-200  dark:bg-neutral-700  top-1/2 z-0 -translate-y-1/2 h-full ${
                 credenitals.chartTime === "Week"
@@ -69,7 +82,7 @@ function TotalChart() {
               }
               className="p-2 place-self-center relative z-10"
             >
-              Month
+              <label>Month</label>
             </div>
           </aside>
 

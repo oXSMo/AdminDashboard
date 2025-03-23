@@ -29,6 +29,7 @@
     "moment": "^2.30.1",
     "preline": "^2.7.0",
     "react": "^18.2.0",
+    "react-animated-counter": "^1.7.9",
     "react-apexcharts": "^1.7.0",
     "react-dom": "^18.2.0",
     "react-icons": "^5.4.0",

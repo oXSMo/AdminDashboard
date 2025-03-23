@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { profileSlice } from "../Store/dashboard";
 
 ////////!    GET USERS DETAILS    !////////
 export const usetGetUsersDetails = () => {
@@ -243,4 +244,29 @@ export const useLogin = () => {
   };
 
   return { login, loading, err };
+};
+
+//////!   GET PROFILE   !//////
+
+export const useGetPorfile = () => {
+  const [loading, setloading] = useState(false);
+  const [err, seterr] = useState(false);
+  const { setprofile } = profileSlice();
+  const get = async () => {
+    try {
+      setloading(true);
+      const resp = await axios.get("/api/auth/profile");
+      setprofile(resp.data);
+    } catch (error) {
+      seterr(true);
+    } finally {
+      setloading(false);
+    }
+  };
+
+  useEffect(() => {
+    get();
+  }, []);
+
+  return { loading, err, get };
 };

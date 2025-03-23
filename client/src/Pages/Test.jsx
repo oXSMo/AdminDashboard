@@ -1,23 +1,40 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Input from "../Components/common/Input";
 import { useLogin } from "../Hooks/useUser";
+import { useAnimatedCounter } from "../Utils/Hooks";
+import { AnimatedCounter } from "react-animated-counter";
+import CounterUp from "../Components/common/CounterUp";
 
 function Test() {
-  const [credentials, setcredentials] = useState({ email: "", passowrd: "" });
-  const { loading, login,err } = useLogin();
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    await login(credentials);
-  };
+  const [target, setTarget] = useState(0);
+  const [direction, setdirection] = useState("up");
+  const { current } = useAnimatedCounter(target);
+
   return (
     <section className="w-full h-full grid place-content-center">
-      <form onSubmit={handleSubmit} className="container p-4 space-y-4">
-        <Input err={err?.email} name="email" set={setcredentials} state={credentials} />
-        <Input err={err?.password} name="password" set={setcredentials} state={credentials} />
-        <button type="submit" className="button w-full border border-color">
-          Submit
-        </button>
-      </form>
+      <AnimatedCounter value={target} color="white" fontSize="40px" />
+      <CounterUp
+        maxValue={target}
+        direction={direction}
+        duration={1000}
+        steps={999}
+      />
+      <button
+        onClick={() => setTarget(1000)}
+        className="button border border-color"
+      >
+        +
+      </button>
+
+      <button
+        onClick={() => {
+          setdirection("down");
+          setTarget(200);
+        }}
+        className="button border border-color"
+      >
+        -
+      </button>
     </section>
   );
 }

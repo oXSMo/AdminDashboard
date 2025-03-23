@@ -21,10 +21,12 @@ import { AiFillProduct } from "react-icons/ai";
 import Switch from "../common/Switch";
 import { sidebarSlice } from "../../Store/darktheme";
 import { TbLayoutSidebarLeftExpandFilled } from "react-icons/tb";
+import { profileSlice } from "../../Store/dashboard";
 
 function Navbar() {
   const { setisDark, isDark } = useToggleTheme();
   const { setshow, show } = sidebarSlice();
+  const { profile } = profileSlice();
 
   return (
     <nav className="w-full h-14 px-6 items-center grid grid-cols-3 sticky top-0 dark:bg-fif bg-white border-b dark:shadow-none shadow-md shadow-black/10 border-color z-50">
@@ -91,13 +93,17 @@ function Navbar() {
 
         {/* ADMIN DROPDOWN  */}
         <div className="dark:bg-white/20 bg-black/20 w-px mx-2 h-6"></div>
-        <AdminDropDown setisDark={setisDark} isDark={isDark} />
+        <AdminDropDown
+          profile={profile}
+          setisDark={setisDark}
+          isDark={isDark}
+        />
       </article>
     </nav>
   );
 }
 
-const AdminDropDown = ({ setisDark, isDark }) => {
+const AdminDropDown = ({ setisDark, isDark, profile }) => {
   return (
     <>
       <section className="hs-dropdown relative inline-flex [--auto-close:inside]">
@@ -127,11 +133,9 @@ const AdminDropDown = ({ setisDark, isDark }) => {
               <NAV icon={<MdAdminPanelSettings className="!text-2xl" />}>
                 <div>
                   <h1 className="font-semibold tracking-wide text-base">
-                    Sohaib Man
+                    {profile?.username}
                   </h1>
-                  <h2 className="text-xs text-neutral-500">
-                    xsm9512368740@gmail.com
-                  </h2>
+                  <h2 className="text-xs text-neutral-500">{profile?.email}</h2>
                 </div>
               </NAV>
             </aside>
@@ -157,9 +161,9 @@ const AdminDropDown = ({ setisDark, isDark }) => {
                   <h2 className=" font-medium tracking-wide">Categories</h2>
                 </div>
               </NAV>
-              <NAV to="/items" icon={<AiFillProduct className="text-lg" />}>
+              <NAV to="/createItem" icon={<AiFillProduct className="text-lg" />}>
                 <div>
-                  <h2 className=" font-medium tracking-wide">Items</h2>
+                  <h2 className=" font-medium tracking-wide">Item</h2>
                 </div>
               </NAV>
             </aside>

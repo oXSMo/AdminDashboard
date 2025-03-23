@@ -46,13 +46,14 @@ function Status({ credentials, o, setcredentials }) {
         <div
           ref={refs.setFloating}
           style={floatingStyles}
-          className="w-28 bg-color max-h-36 shadow-lg shadow-black/60 overflow-auto popFade z-40 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:rounded-md rounded-md space-y-0.5 p-1"
+          className="w-28 bg-color max-h-36 shadow-lg shadow-black/60 overflow-auto popFade z-40 [&::-webkit-scrollbar]:w-1.5  rounded-md space-y-0.5 p-1"
         >
           <Option text="pending" {...set} />
           <Option text="processing" {...set} />
           <Option text="cancelled" {...set} />
           <Option text="delivered" {...set} />
           <Option text="shipped" {...set} />
+          <Option text="done" {...set} />
         </div>
       )}
     </aside>

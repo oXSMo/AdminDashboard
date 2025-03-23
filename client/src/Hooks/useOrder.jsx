@@ -205,7 +205,7 @@ export const useGetTracking = (Tracking) => {
 export const useCoilCred = (o, u) => {
   const { setcredentials: setCoil } = shipSlice();
   const navigate = useNavigate();
-  const { loading, getOne } = useGetOneUser(u._id, false);
+  const { loading, getOne } = useGetOneUser(u?._id, false);
 
   const send = async () => {
     const user = await getOne();

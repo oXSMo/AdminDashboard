@@ -22,16 +22,12 @@ import CategoryCreate from "./Pages/Categories/CategoryCreate";
 import ShippingCreate from "./Pages/Shipping/ShippingCreate";
 import CreateItem from "./Pages/Items/CreateItem";
 import EditItem from "./Pages/Items/EditItem";
+import { useGetPorfile } from "./Hooks/useUser";
 
 function App() {
   const location = useLocation();
+  useGetPorfile();
 
-  useEffect(() => {
-    // @ts-ignore
-    HSStaticMethods.autoInit();
-  }, [location.pathname]);
-
-  const { isDark } = darkSlice();
   console.log(localStorage.getItem("isAdmin"));
 
   if (!localStorage.getItem("isAdmin")) return <Auth />;
