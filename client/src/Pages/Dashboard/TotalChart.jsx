@@ -40,23 +40,18 @@ function TotalChart() {
   }, [total, credenitals.chartTime]);
 
   return (
-    <section className="p-4 w-full  border border-color rounded-xl sm:h-[500px] h-[400px] grid grid-rows-[auto_1fr] bg-white dark:bg-fif shadow-lg shadow-black/40">
+    <section className="p-4 w-full  border border-color rounded-xl sm:h-[500px] h-[430px] grid grid-rows-[auto_1fr] bg-white dark:bg-fif shadow-lg shadow-black/40">
       {/* HEADER  */}
 
-      <header className="flex justify-between items-center">
+      <header className="md:flex justify-between items-center">
         <aside>
           <h1 className=" tracking-wide opacity-70">
             Total This {credenitals.chartTime}
           </h1>
-          <h2 className="text-4xl font-medium flex gap-2">
-            <AnimatedCounter
-              value={target}
-              color="white"
-              fontSize="40px"
-              decimalPrecision={false}
-            />
-            <span className="mt-auto opacity-60 text-xl">DA</span>
-          </h2>
+          <div className="text-4xl font-medium flex justify-start  gap-2">
+            {target}
+            <span className="mt-auto mr-auto opacity-60 text-xl">DA</span>
+          </div>
         </aside>
 
         <article className="flex gap-2">
@@ -88,7 +83,7 @@ function TotalChart() {
 
           <button
             onClick={handleScreenshot}
-            className="button hs-tooltip [--placement:top] border border-color hover:border-transparent w-9 !p-0"
+            className="button hs-tooltip  [--placement:top] border border-color hover:border-transparent w-9 !p-0"
           >
             <MdAddAPhoto />
             <span

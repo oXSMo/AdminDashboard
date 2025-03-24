@@ -116,7 +116,7 @@ function InvoiceOrder({ order, set }) {
               </div>
 
               <div className=" place-self-end text-black">
-                Price : {order?.totalPrice || "N/A"}
+                Price : {order?.totalPrice || "N/A"} DA
               </div>
             </aside>
           </article>

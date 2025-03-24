@@ -3,7 +3,7 @@ import Select from "../../Components/common/Select";
 import { MdGroup, MdSwapVert, MdTune } from "react-icons/md";
 import { FaBoxes, FaSearch } from "react-icons/fa";
 import Input from "../../Components/common/Input";
-import { useGetAllOrders } from "../../Hooks/useOrder";
+import { useCreateCoils, useGetAllOrders } from "../../Hooks/useOrder";
 import Checkbox from "../../Components/common/Checkbox";
 import Modal from "../../Components/common/Modal";
 import { Avatar } from "../Users/UserOverview";
@@ -29,8 +29,14 @@ function OrdersTable() {
 
   const { loading, getAll, orders } = useGetAllOrders({ filter });
   const { items } = useGetAllItems();
-  console.log(filter);
-  
+  const [select, setselect] = useState([]);
+
+  const { createMany, looading } = useCreateCoils();
+
+  const handleClick = async () => {
+    await createMany(select);
+    setselect([])
+  };
   return (
     <main className="p-5 w-full fadeIn overflow-hidden grid border border-color rounded-xl   bg-white dark:bg-fif shadow-lg shadow-black/40  ">
       <header className="flex items-center justify-between flex-wrap gap-2">
@@ -71,6 +77,13 @@ function OrdersTable() {
             placement="bottom-end"
             strategy="absolute"
           />
+          <button
+            disabled={!select.length}
+            onClick={handleClick}
+            className="button border border-blue-600 bg-blue-600  transparent text-xs"
+          >
+            <p className="line-clamp-1 break-all">Send Coils</p>
+          </button>
         </div>
       </header>
 
@@ -79,6 +92,8 @@ function OrdersTable() {
         getAll={getAll}
         setfilter={setfilter}
         filter={filter}
+        setselect={setselect}
+        select={select}
       />
 
       <footer className="mt-4 flex justify-between">
@@ -95,8 +110,7 @@ function OrdersTable() {
   );
 }
 
-const Table = ({ orders, filter, setfilter, getAll }) => {
-  const [select, setselect] = useState([]);
+const Table = ({ orders, filter, setfilter, getAll, setselect, select }) => {
   const [orderId, setorderId] = useState();
   const [open, setopen] = useState(false);
   const [openSide, setopenSide] = useState(false);

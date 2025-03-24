@@ -73,7 +73,7 @@ function UserOverview() {
 
 export const UserCard = ({ color, title, tooltip, total, users, icon }) => {
   return (
-    <article className="w-full fadeIn bg-color h-32 border border-color dark:bg-fif bg-white shadow-lg shadow-black/40 rounded-lg relative p-4 overflow-hidden">
+    <article className="w-full fadeIn bg-color min-h-32 border border-color dark:bg-fif bg-white shadow-lg shadow-black/40 rounded-lg relative p-4 overflow-hidden">
       <span
         style={{ boxShadow: `5px 5px 130px 20px ${color}` }}
         className="absolute w-20 h-20 z-0 -translate-x-12 -translate-y-24 rounded-full"

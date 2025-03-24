@@ -17,7 +17,7 @@ function Header() {
   const { info } = useGetLatestUsers();
 
   return (
-    <section className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-6">
+    <section className="grid lg:grid-cols-3 max-w-full gap-6">
       <Users />
       <Orders />
       <TotalSales />
@@ -316,7 +316,7 @@ const TotalSales = () => {
   const ttl = total?.reduce((a, b) => a.totalPrice + b.totalPrice) || 0;
 
   return (
-    <article className="w-full col-span-1  fadeIn border dark:bg-fif h-96 rounded-xl border-color shadow-lg shadow-black/40 grid grid-rows-[1fr_auto_auto]">
+    <article className=" col-span-1  fadeIn border dark:bg-fif h-96 rounded-xl border-color shadow-lg shadow-black/40 grid grid-rows-[1fr_auto_auto]">
       <aside className="h-full px-6 p-4 pb-2">
         {/* HEADER  */}
         <header className="flex justify-between items-center text-2xl ">
