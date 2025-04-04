@@ -51,7 +51,7 @@ const CounterUp = ({
 
   return (
     <div ref={elementRef} className="counter">
-      {count.toLocaleString()}
+      {count?.toLocaleString()}
     </div>
   );
 };

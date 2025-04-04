@@ -22,6 +22,7 @@ import Switch from "../common/Switch";
 import { sidebarSlice } from "../../Store/darktheme";
 import { TbLayoutSidebarLeftExpandFilled } from "react-icons/tb";
 import { profileSlice } from "../../Store/dashboard";
+import { useLogout } from "../../Hooks/useUser";
 
 function Navbar() {
   const { setisDark, isDark } = useToggleTheme();
@@ -104,6 +105,11 @@ function Navbar() {
 }
 
 const AdminDropDown = ({ setisDark, isDark, profile }) => {
+  const { logout } = useLogout();
+
+  const handleLogout = async () => {
+    await logout();
+  };
   return (
     <>
       <section className="hs-dropdown relative inline-flex [--auto-close:inside]">
@@ -161,7 +167,10 @@ const AdminDropDown = ({ setisDark, isDark, profile }) => {
                   <h2 className=" font-medium tracking-wide">Categories</h2>
                 </div>
               </NAV>
-              <NAV to="/createItem" icon={<AiFillProduct className="text-lg" />}>
+              <NAV
+                to="/createItem"
+                icon={<AiFillProduct className="text-lg" />}
+              >
                 <div>
                   <h2 className=" font-medium tracking-wide">Item</h2>
                 </div>
@@ -182,9 +191,7 @@ const AdminDropDown = ({ setisDark, isDark, profile }) => {
 
             <div className="p-1">
               <NAV
-                onClick={() => {
-                  localStorage.clear(), window.location.reload();
-                }}
+                onClick={handleLogout}
                 icon={<MdLogout className="text-red-600 text-lg" />}
               >
                 <h1 className="text-red-600">SignOut</h1>

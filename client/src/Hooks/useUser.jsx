@@ -246,19 +246,48 @@ export const useLogin = () => {
   return { login, loading, err };
 };
 
+//////!   LOGOUT   !//////
+
+export const useLogout = () => {
+  const [loading, setloading] = useState(false);
+  const [error, seterror] = useState();
+
+  const logout = async () => {
+    try {
+      setloading(true);
+      localStorage.clear();
+      await axios.get("/api/auth/logout");
+      window.location.reload();
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setloading(false);
+    }
+  };
+
+  return { logout, loading, error };
+};
+
 //////!   GET PROFILE   !//////
 
 export const useGetPorfile = () => {
   const [loading, setloading] = useState(false);
   const [err, seterr] = useState(false);
   const { setprofile } = profileSlice();
+  const { logout } = useLogout();
+
   const get = async () => {
     try {
       setloading(true);
+      console.log("xqsdqsd");
+      
       const resp = await axios.get("/api/auth/profile");
       setprofile(resp.data);
     } catch (error) {
       seterr(true);
+      if (error.response.status === 401) {
+        logout();
+      }
     } finally {
       setloading(false);
     }

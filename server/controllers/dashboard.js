@@ -127,7 +127,7 @@ export const countUsers = async (req, res) => {
         },
       },
     ]);
-
+    console.log("a");
     const latest = await User.find({})
       .sort({ createdAt: -1 })
       .limit(5)
@@ -135,7 +135,8 @@ export const countUsers = async (req, res) => {
 
     let ttl = {};
     Object.keys(users[0]).map((key, i) => {
-      ttl[key] = Object.values(users[0])[i][0].total;
+      if (Object.values(users[0])[i][0]?.total)
+        ttl[key] = Object.values(users[0])[i][0]?.total;
     });
 
     res.status(202).json({ ...ttl, latest: latest?.map((l) => l.username) });
@@ -181,7 +182,7 @@ export const countOrders = async (req, res) => {
     const latest = await Order.find({})
       .sort({ createdAt: -1 })
       .limit(2)
-      .select("createdAt item user")
+      .select("createdAt item user updatedAt")
       .populate([
         { path: "item", select: "name" },
         { path: "user", select: "username -_id" },

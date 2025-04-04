@@ -92,7 +92,9 @@ const Users = () => {
         {users?.latest?.map((n) => (
           <Avatar name={n} />
         ))}
-        <h1 className="opacity-60 text-xs !ml-2">{users.all - 5 || 0} more</h1>
+        <h1 className="opacity-60 text-xs !ml-2">
+          {users.all > 5 ? users.all - 5 : 0} more
+        </h1>
       </aside>
       {/* VIEW MORE  */}
 
