@@ -272,14 +272,14 @@ const OrderCard = ({ last, order }) => {
             </h1>
             <h2 className="flex gap-3 opacity-50 text-[10px] leading-none mb-1 items-end">
               <p>{moment(order.createdAt).fromNow()}</p>
-              <p className="opacity-50  ">{order.item.name}</p>
+              <p className="opacity-50  ">{order?.item?.name}</p>
             </h2>
           </div>
         </aside>
 
         <aside className="flex border  border-color h-6 opacity-0 group-hover:opacity-100 duration-200  rounded">
           <div
-            onClick={() => copyToClipboard(order.item._id)}
+            onClick={() => copyToClipboard(order?.item?._id)}
             className="grid place-content-center   border-r border-color hs-tooltip w-6   text-[11px]"
           >
             {!isCopied ? (

@@ -185,7 +185,7 @@ const Table = ({ orders, filter, setfilter, getAll, setselect, select }) => {
           <tbody>
             {orders?.orders?.map((o, i) => (
               <TableRow
-                key={o._id}
+                key={o?._id}
                 o={o}
                 setopen={setopen}
                 setorderId={setorderId}
@@ -210,8 +210,8 @@ const Table = ({ orders, filter, setfilter, getAll, setselect, select }) => {
       <Modal open={open} onClose={setopen}>
         <img
           src={
-            orders?.orders?.find((o) => o._id === orderId)?.image ||
-            orders?.orders?.find((o) => o._id === orderId)?.item?.category
+            orders?.orders?.find((o) => o?._id === orderId)?.image ||
+            orders?.orders?.find((o) => o?._id === orderId)?.item?.category
               ?.image
           }
           className="rounded-md cursor-pointer max-h-[90vh] max-w-[90vw]"
@@ -222,14 +222,14 @@ const Table = ({ orders, filter, setfilter, getAll, setselect, select }) => {
         <UserSidebar
           set={setopenSide}
           open={openSide}
-          _id={orders?.orders?.find((o) => o._id === orderId)?.user._id}
+          _id={orders?.orders?.find((o) => o?._id === orderId)?.user._id}
         />
       </OffCanvas>
       <OffCanvas open={openDetail} set={setopenDetail}>
         <OrderSidebar
           set={setopenDetail}
           open={openDetail}
-          o={orders?.orders?.find((o) => o._id === orderId)}
+          o={orders?.orders?.find((o) => o?._id === orderId)}
           getAll={getAll}
         />
       </OffCanvas>

@@ -44,148 +44,152 @@ export const TableRow = ({
     await getAll();
   };
 
-  return (
-    <tr
-      key={o?._id}
-      onClick={() => {
-        setselect((select) =>
-          !select?.find((e) => e === o?._id)
-            ? [...select, o?._id]
-            : select?.filter((e) => e !== o?._id)
-        );
-      }}
-      className="border-b border-color cursor-pointer hover:bg-black/30 !relative"
-    >
-      {/* CHECKBOX  */}
-      <td className=" pl-2 hs-dropdown-toggle border-r border-color">
-        <Checkbox check={select.find((e) => e === o?._id)} />
-      </td>
-
-      {/* ITEM  */}
-
-      <td
-        onClick={(e) => {
-          e.stopPropagation();
-          setorderId(o?._id);
-          setopenDetail(true);
+  if (o?.item?.category)
+    return (
+      <tr
+        key={o?._id}
+        onClick={() => {
+          setselect((select) =>
+            !select?.find((e) => e === o?._id)
+              ? [...select, o?._id]
+              : select?.filter((e) => e !== o?._id)
+          );
         }}
-        className="flex py-2 items-center gap-4 hover:bg-black/60 hover:text-white group border-r border-color relative"
+        className="border-b border-color cursor-pointer hover:bg-black/30 !relative"
       >
-        <img
+        {/* CHECKBOX  */}
+        <td className=" pl-2 hs-dropdown-toggle border-r border-color">
+          <Checkbox check={select.find((e) => e === o?._id)} />
+        </td>
+
+        {/* ITEM  */}
+
+        <td
           onClick={(e) => {
             e.stopPropagation();
             setorderId(o?._id);
-            setopen(true);
+            setopenDetail(true);
           }}
-          src={o?.image || o?.item.category?.image}
-          className="rounded-md cursor-pointer w-12 ml-3  h-10"
-        />
-
-        <h1 className="font-medium tracking-wide text-sm line-clamp-1">
-          {o?.item.name}
-        </h1>
-        <span
-          //   onClick={(e) => {
-          //     e.stopPropagation();
-          //     setuserId(u._id);
-          //     setopen(true);
-          //   }}
-          className="absolute items-center  py-1 px-1 hover:bg-opacity-80 group-active:-translate-x-px dark:bg-fif bg-sec text-white right-2 top-1/2 -translate-y-1/2 rounded-md flex gap-1 text-[14px] border border-color opacity-0 group-hover:opacity-100 duration-200"
+          className="flex py-2 items-center gap-4 hover:bg-black/60 hover:text-white group border-r border-color relative"
         >
-          <LuPanelRightOpen />{" "}
-        </span>
-      </td>
-
-      {/* USER  */}
-
-      <td
-        onClick={(e) => {
-          e.stopPropagation();
-          setorderId(o?._id);
-          o?.user?._id && setopenSide(true);
-        }}
-        className="p-2 px-3 border-r border-color hover:bg-black/60 hover:text-white relative group"
-      >
-        <div className="flex items-center gap-14.5">
-          <h1 className="font-medium tracking-wide text-sm line-clamp-1 opacity-80">
-            {o?.user?.username}
-          </h1>
-        </div>
-        <span
-          //   onClick={(e) => {
-          //     e.stopPropagation();
-          //     setuserId(u._id);
-          //     setopen(true);
-          //   }}
-          className="absolute items-center  py-1 px-1 hover:bg-opacity-80 group-active:-translate-x-px dark:bg-fif bg-sec text-white right-2 top-1/2 -translate-y-1/2 rounded-md flex gap-1 text-[14px] border border-color opacity-0 group-hover:opacity-100 duration-200"
-        >
-          <LuPanelRightOpen />{" "}
-        </span>
-      </td>
-
-      {/* CREATED AT  */}
-
-      <td className="p-2 border-r border-color">
-        {moment(o?.createdAt).fromNow()}
-      </td>
-
-      {/* STATUS  */}
-      <td
-        onClick={(e) => e.stopPropagation()}
-        onKeyDown={(e) => {
-          if (e.key === "Enter" && o?.status !== credentials.status)
-            handleUpdate();
-        }}
-        className="px-3 border-r border-color"
-      >
-        <Status
-          o={o}
-          credentials={credentials}
-          setcredentials={setcredentials}
-        />
-      </td>
-
-      {/* PRICE  */}
-      <td
-        onClick={(e) => e.stopPropagation()}
-        onKeyDown={(e) => {
-          if (e.key === "Enter" && o?.totalPrice !== credentials.totalPrice)
-            handleUpdate();
-        }}
-        className="px-3 border-r border-color w-24"
-      >
-        <div className="flex gap-2 items-end">
-          <input
-            type="number"
-            value={credentials.totalPrice}
-            className="opacity-80 text-base font-semibold bg-transparent outline-none w-20"
-            onChange={(e) =>
-              setcredentials({
-                ...credentials,
-                totalPrice: Math.max(0, parseInt(event.target.value, 10) || 0),
-              })
-            }
-            min={0}
+          <img
+            onClick={(e) => {
+              e.stopPropagation();
+              setorderId(o?._id);
+              setopen(true);
+            }}
+            src={o?.image || o?.item?.category?.image}
+            className="rounded-md cursor-pointer w-12 ml-3  h-10"
           />
 
-          <span className="opacity-80 text-xs">DA</span>
-        </div>
-      </td>
-      {/* CATEGORY  */}
-      <td className="px-3  font-medium tracking-wide border-color">
-        <h1 className="">{o?.item?.category?.name}</h1>
-      </td>
+          <h1 className="font-medium tracking-wide text-sm line-clamp-1">
+            {o?.item?.name}
+          </h1>
+          <span
+            //   onClick={(e) => {
+            //     e.stopPropagation();
+            //     setuserId(u._id);
+            //     setopen(true);
+            //   }}
+            className="absolute items-center  py-1 px-1 hover:bg-opacity-80 group-active:-translate-x-px dark:bg-fif bg-sec text-white right-2 top-1/2 -translate-y-1/2 rounded-md flex gap-1 text-[14px] border border-color opacity-0 group-hover:opacity-100 duration-200"
+          >
+            <LuPanelRightOpen />{" "}
+          </span>
+        </td>
 
-      <td onClick={(e) => e.stopPropagation()}>
-        <Dropdown
-          o={o}
-          credentials={credentials}
-          getAll={getAll}
-          handleUpdate={handleUpdate}
-        />
-      </td>
-    </tr>
-  );
+        {/* USER  */}
+
+        <td
+          onClick={(e) => {
+            e.stopPropagation();
+            setorderId(o?._id);
+            o?.user?._id && setopenSide(true);
+          }}
+          className="p-2 px-3 border-r border-color hover:bg-black/60 hover:text-white relative group"
+        >
+          <div className="flex items-center gap-14.5">
+            <h1 className="font-medium tracking-wide text-sm line-clamp-1 opacity-80">
+              {o?.user?.username}
+            </h1>
+          </div>
+          <span
+            //   onClick={(e) => {
+            //     e.stopPropagation();
+            //     setuserId(u._id);
+            //     setopen(true);
+            //   }}
+            className="absolute items-center  py-1 px-1 hover:bg-opacity-80 group-active:-translate-x-px dark:bg-fif bg-sec text-white right-2 top-1/2 -translate-y-1/2 rounded-md flex gap-1 text-[14px] border border-color opacity-0 group-hover:opacity-100 duration-200"
+          >
+            <LuPanelRightOpen />{" "}
+          </span>
+        </td>
+
+        {/* CREATED AT  */}
+
+        <td className="p-2 border-r border-color">
+          {moment(o?.createdAt).fromNow()}
+        </td>
+
+        {/* STATUS  */}
+        <td
+          onClick={(e) => e.stopPropagation()}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" && o?.status !== credentials.status)
+              handleUpdate();
+          }}
+          className="px-3 border-r border-color"
+        >
+          <Status
+            o={o}
+            credentials={credentials}
+            setcredentials={setcredentials}
+          />
+        </td>
+
+        {/* PRICE  */}
+        <td
+          onClick={(e) => e.stopPropagation()}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" && o?.totalPrice !== credentials.totalPrice)
+              handleUpdate();
+          }}
+          className="px-3 border-r border-color w-24"
+        >
+          <div className="flex gap-2 items-end">
+            <input
+              type="number"
+              value={credentials.totalPrice}
+              className="opacity-80 text-base font-semibold bg-transparent outline-none w-20"
+              onChange={(e) =>
+                setcredentials({
+                  ...credentials,
+                  totalPrice: Math.max(
+                    0,
+                    parseInt(event.target.value, 10) || 0
+                  ),
+                })
+              }
+              min={0}
+            />
+
+            <span className="opacity-80 text-xs">DA</span>
+          </div>
+        </td>
+        {/* CATEGORY  */}
+        <td className="px-3  font-medium tracking-wide border-color">
+          <h1 className="">{o?.item?.category?.name}</h1>
+        </td>
+
+        <td onClick={(e) => e.stopPropagation()}>
+          <Dropdown
+            o={o}
+            credentials={credentials}
+            getAll={getAll}
+            handleUpdate={handleUpdate}
+          />
+        </td>
+      </tr>
+    );
 };
 
 ////////!    DROP DOWN    !////////
@@ -267,7 +271,7 @@ const Dropdown = ({ o, credentials, getAll, handleUpdate }) => {
         </article>
       </DropDown>
       <Modal onClose={setmodal} open={modal}>
-        <InvoiceOrder order={o} set={setmodal}/>
+        <InvoiceOrder order={o} set={setmodal} />
       </Modal>
     </>
   );
