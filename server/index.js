@@ -23,8 +23,12 @@ app.use(
 app.options("*", cors()); // Enable preflight for all routes
 app.use(express.json());
 app.use(cookieParser());
+
+
 (async () => {
   try {
+    console.log({mongodb:process.env.APPPASS});
+    
     await mongoose.connect(process.env.MONGODB);
     console.log("MongDB Connected");
   } catch (error) {

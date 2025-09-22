@@ -20,21 +20,22 @@ function TotalChart() {
     }
   };
 
-  console.log({ total });
+  
 
   useEffect(() => {
     setTarget(
       total
-        ? credenitals?.chartTime === "Month"
-          ? total?.map((e) => e.totalPrice).reduce((a, b) => a + b)
-          : total
-              ?.map((e, i) => {
+        ? credenitals?.chartTime === "Month" && total.length  
+          ? total?.map((e) => e.totalPrice)?.reduce((a, b) => a + b)
+          :  total?.map((e, i) => {
                 const inputDate = new Date(e._id);
                 const oneWeekAgo = new Date(inputDate);
                 oneWeekAgo.setDate(inputDate.getDate() - 7)
+                
+                
                 return i < 7 ? e.totalPrice : 0;
               })
-              .reduce((a, b) => a + b)
+              ?.reduce((a, b) => a + b)
         : 0
     );
   }, [total, credenitals.chartTime]);

@@ -315,7 +315,7 @@ const OrderCard = ({ last, order }) => {
 
 const TotalSales = () => {
   const { total, loading } = useGetTotal();
-  const ttl = total?.reduce((a, b) => a.totalPrice + b.totalPrice) || 0;
+  // const ttl = total?.reduce((a, b) => a.totalPrice + b.totalPrice) || 0;
 
   return (
     <article className=" col-span-1  fadeIn border dark:bg-fif h-96 rounded-xl border-color shadow-lg shadow-black/40 grid grid-rows-[1fr_auto_auto]">
@@ -331,7 +331,7 @@ const TotalSales = () => {
             0
           ) : (
             <CounterUp
-              maxValue={total?.map((e) => e.totalPrice).reduce((a, b) => a + b)}
+              maxValue={total?.map((e) => e.totalPrice)?.reduce((a, b) => a + b)}
               duration={1500}
               steps={150}
             />

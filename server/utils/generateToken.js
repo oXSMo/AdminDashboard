@@ -5,5 +5,6 @@ export const setCookie = (userId, res) => {
   res.cookie("jwt", token, {
     httpOnly: true,
     sameSite: "strict",
+    maxAge: 365 * 24 * 60 * 60 * 1000
   });
 };
